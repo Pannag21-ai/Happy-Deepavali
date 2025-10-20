@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Deepavali!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Setup & Theming --- */
+        :root {
+            --bg-color: #0a0618;
+            --card-bg: rgba(15, 5, 30, 0.75);
+            --primary-gold: #ffd700;
+            --primary-orange: #ff8c00;
+            --primary-pink: #ff4081;
+            --primary-cyan: #00bcd4;
+            --text-color: #f0e6d2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: crosshair;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+        }
+
+        /* --- Animated Background Elements --- */
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            background: var(--primary-gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-up 12s infinite;
+        }
+        .sparkle:nth-child(odd) { background: var(--primary-pink); animation-duration: 15s; }
+        .sparkle:nth-child(even) { background: var(--primary-cyan); animation-duration: 10s; }
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Sky Lanterns */
+        .lantern {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            background: radial-gradient(ellipse at center, rgba(255, 152, 0, 0.8), rgba(255, 87, 34, 0.6));
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 20px 5px rgba(255, 152, 0, 0.5);
+            opacity: 0;
+            animation: float-lantern 25s infinite linear;
+        }
+        .lantern::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 15px;
+            background: rgba(100, 100, 100, 0.5);
+        }
+        @keyframes float-lantern {
+            0% { transform: translateY(110vh) translateX(0) rotate(-5deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-20vh) translateX(100px) rotate(5deg); opacity: 0; }
+        }
+
+        /* --- Rangoli SVG --- */
+        .rangoli-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            opacity: 0.2;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .rangoli-path {
+            fill: none;
+            stroke: var(--primary-gold);
+            stroke-width: 2;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-rangoli 4s ease-in-out forwards;
+        }
+        @keyframes draw-rangoli {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* --- Main Greeting Card --- */
+        .greeting-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            padding: 40px 60px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            max-width: 90%;
+            z-index: 10;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, var(--primary-gold), var(--primary-orange), var(--primary-pink));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            margin-bottom: 20px;
+            position: relative;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .greeting-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e0d5c7;
+        }
+
+        /* --- The Diyas (Oil Lamps) --- */
+        .diyas-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px auto;
+        }
+
+        .diya-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            transition: transform 0.3s ease;
+        }
+        .diya-wrapper:hover {
+            transform: scale(1.1);
+        }
+
+        .diya {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 30px;
+            background: linear-gradient(to top, #c0392b, #e74c3c);
+            border-radius: 0 0 50% 50%;
+            border: 2px solid #8b2c1b;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .flame {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 35px;
+            background: radial-gradient(ellipse at bottom, #fff 0%, #ffeb3b 20%, #ff9800 60%, #ff5722 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 20px 10px #ff9800, 0 0 40px 20px #ff5722;
+            animation: flicker 1.5s infinite alternate;
+            transition: all 0.3s ease;
+        }
+        .diya-wrapper:hover .flame {
+            height: 45px;
+            width: 30px;
+            box-shadow: 0 0 25px 15px #ff9800, 0 0 50px 25px #ff5722;
+        }
+
+        .diya-wrapper:nth-child(1) .flame { animation-delay: 0s; }
+        .diya-wrapper:nth-child(2) .flame { animation-delay: 0.5s; }
+        .diya-wrapper:nth-child(3) .flame { animation-delay: 1s; }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+            25% { transform: translateX(-50%) scale(1.05) rotate(2deg); }
+            50% { transform: translateX(-50%) scale(0.95) rotate(-1deg); }
+            75% { transform: translateX(-50%) scale(1.02) rotate(1deg); }
+            100% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+        }
+
+        .from {
+            font-style: italic;
+            font-size: 1rem;
+            margin-top: 20px;
+            color: var(--primary-gold);
+        }
+
+        /* --- Firework Effect (JS-generated) --- */
+        .firework-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: explode 1.2s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .greeting-card { padding: 30px 25px; }
+            .greeting-text { font-size: 1rem; }
+            .rangoli-container { width: 350px; height: 350px; }
+            .diyas-container { gap: 15px; }
+            .diya-wrapper { width: 60px; height: 60px; }
+            .diya { width: 55px; height: 22px; }
+            .flame { width: 20px; height: 28px; bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-elements">
+        <!-- Sparkles -->
+        <div class="sparkle" style="width: 4px; height: 4px; left: 10%; animation-delay: 0s;"></div>
+        <div class="sparkle" style="width: 3px; height: 3px; left: 25%; animation-delay: 2s;"></div>
+        <div class="sparkle" style="width: 5px; height: 5px; left: 40%; animation-delay: 4s;"></div>
+        <div class="sparkle" style="width: 2px; height: 2px; left: 55%; animation-delay: 1s;"></div>
+        <div class="sparkle" style="width: 3px; height: 3px; left: 70%; animation-delay: 3s;"></div>
+        <div class="sparkle" style="width: 4px; height: 4px; left: 85%; animation-delay: 5s;"></div>
+
+        <!-- Sky Lanterns -->
+        <div class="lantern" style="left: 15%; animation-delay: 0s;"></div>
+        <div class="lantern" style="left: 75%; animation-delay: 10s;"></div>
+        <div class="lantern" style="left: 40%; animation-delay: 20s;"></div>
+    </div>
+
+    <!-- Rangoli Pattern -->
+    <div class="rangoli-container">
+        <svg width="100%" height="100%" viewBox="0 0 100 100">
+            <g class="rangoli-path">
+                <path d="M50,10 L60,30 L80,30 L65,45 L70,65 L50,50 L30,65 L35,45 L20,30 L40,30 Z" fill="var(--primary-pink)" fill-opacity="0.5"/>
+                <circle cx="50" cy="50" r="8" fill="var(--primary-gold)"/>
+                <path d="M50,5 L55,15 L65,15 L57,22 L60,32 L50,25 L40,32 L43,22 L35,15 L45,15 Z" fill="none" stroke-width="1.5"/>
+                <path d="M50,68 L55,78 L65,78 L57,85 L60,95 L50,88 L40,95 L43,85 L35,78 L45,78 Z" fill="none" stroke-width="1.5"/>
+                <path d="M18,50 L28,55 L28,65 L21,57 L11,60 L18,50 Z" fill="none" stroke-width="1.5"/>
+                <path d="M82,50 L89,60 L79,57 L72,65 L72,55 L82,50 Z" fill="none" stroke-width="1.5"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Main Content -->
+    <main class="greeting-card">
+        <h1>Happy Deepavali!</h1>
+        <p class="greeting-text">
+            May this festival of lights illuminate your path with endless joy, 
+            prosperity, and moments of splendid celebration. Shine on!
+        </p>
+
+        <div class="diyas-container">
+            <div class="diya-wrapper">
+                <div class="diya"></div>
+                <div class="flame"></div>
+            </div>
+            <div class="diya-wrapper">
+                <div class="diya"></div>
+                <div class="flame"></div>
+            </div>
+            <div class="diya-wrapper">
+                <div class="diya"></div>
+                <div class="flame"></div>
+            </div>
+        </div>
+
+        <p class="from">Wishing you a luminous celebration!</p>
+    </main>
+
+    <script>
+        // --- Interactive Fireworks on Click ---
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.greeting-card')) return;
+
+            const colors = ['#ffd700', '#ff8c00', '#ff4081', '#00bcd4', '#8bc34a', '#e91e63', '#cddc39'];
+            const particleCount = 35;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('firework-particle');
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.left = `${e.clientX}px`;
+                particle.style.top = `${e.clientY}px`;
+                
+                const angle = (Math.PI * 2 * i) / particleCount;
+                const velocity = 70 + Math.random() * 80;
+                
+                particle.style.setProperty('--tx', `${Math.cos(angle) * velocity}px`);
+                particle.style.setProperty('--ty', `${Math.sin(angle) * velocity}px`);
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1200);
+            }
+        });
+    </script>
+
+</body>
+</html>
